@@ -4,19 +4,21 @@ import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
 
-import postRoutes from "./routes/posts.js";
-
+dotenv.config(); // Adjust path as needed
 
 const app = express();
 
-app.use("/posts", postRoutes);
+import postRoutes from "./routes/posts.js";
+const PORT = process.env.PORT || 3000
+
+
 
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use(cors());
-dotenv.config(); // Adjust path as needed
 
+app.use("/posts", postRoutes);
 
 // MongoDB connection
 
@@ -39,7 +41,7 @@ const connectDB = async () => {
 
 connectDB();
 
-app.listen (process.env.PORT || 5000, ()=>{
-    console.log("Server Running");
+app.listen ( PORT, ()=>{
+    console.log(`Server Running on port ${PORT}`);
     
 } )
